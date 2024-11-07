@@ -2,26 +2,20 @@ package context
 
 var GlobalContext *Context
 
-type Context interface {
-	GetValue(key string) (interface{}, bool)
-	PutValue(key string, value interface{}) bool
-}
+type Context map[string]interface{}
 
-type myContext map[string]interface{}
-
-func (c *myContext) GetValue(key string) (interface{}, bool) {
-	value, ok := (*c)[key]
+func (c Context) GetValue(key string) (interface{}, bool) {
+	value, ok := c[key]
 	return value, ok
 }
 
-func (c *myContext) PutValue(key string, value interface{}) bool {
+func (c *Context) PutValue(key string, value interface{}) bool {
 	(*c)[key] = value
 	return true
 }
 
 func NewContext() *Context {
-	var ctx Context = &myContext{}
-	return &ctx
+	return &Context{}
 }
 
 func InitContext() *Context {
